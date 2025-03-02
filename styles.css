@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1a1a1a;
+    font-family: 'Playfair Display', serif;
+    color: #e0e0e0;
+    overflow: hidden;
+    position: relative;
+}
+
+.rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.rain-drop {
+    position: absolute;
+    width: 1px;
+    height: 15px;
+    background: linear-gradient(transparent, rgba(255, 255, 255, 0.3));
+    animation: rain linear forwards;
+}
+
+@keyframes rain {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(200vh);
+    }
+}
+
+.container {
+    text-align: center;
+    padding: 40px;
+    max-width: 800px;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+.sentence {
+    font-size: 32px;
+    color: #e0e0e0;
+    line-height: 1.8;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.sentence.visible {
+    opacity: 1;
+}
+
+.author {
+    font-size: 18px;
+    color: #a0a0a0;
+    margin-top: 20px;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    font-style: italic;
+}
+
+.author.visible {
+    opacity: 1;
+}
+
+/* 添加响应式设计 */
+@media (max-width: 768px) {
+    .sentence {
+        font-size: 24px;
+    }
+    
+    .container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .author {
+        font-size: 16px;
+    }
+} 
