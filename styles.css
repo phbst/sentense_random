@@ -91,4 +91,66 @@ body {
     .author {
         font-size: 16px;
     }
-} 
+}
+
+/* 音乐光碟样式 */
+.music-disc {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#musicDisc {
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+/* 鼠标悬停效果 */
+.music-disc:hover #musicDisc {
+    transform: scale(1.05);
+}
+
+/* 旋转动画 */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 播放时的旋转类 */
+.rotating {
+    animation: rotate 5s linear infinite;
+}
+
+/* 涟漪效果样式 */
+.ripple {
+    position: fixed;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple-effect 1s ease-out;
+    background: rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+    width: 100px;
+    height: 100px;
+    margin-left: -50px;
+    margin-top: -50px;
+}
+
+@keyframes ripple-effect {
+    from {
+        transform: scale(0);
+        opacity: 0.8;
+    }
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}

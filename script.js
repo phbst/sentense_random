@@ -77,10 +77,72 @@ async function displayRandomSentence() {
     }, 100);
 }
 
-// 页面加载时初始化
+// 修改背景音乐控制逻辑
+const bgMusic = document.getElementById('bgMusic');
+const musicDisc = document.getElementById('musicDisc');
+
+// 音乐播放控制
+function toggleMusic() {
+    if (bgMusic.paused) {
+        bgMusic.play().then(() => {
+            musicDisc.classList.add('rotating');
+        }).catch(error => console.log("播放失败:", error));
+    } else {
+        bgMusic.pause();
+        musicDisc.classList.remove('rotating');
+    }
+}
+
+// 为光碟添加点击事件
+musicDisc.addEventListener('click', toggleMusic);
+
+// 尝试自动播放
+function tryAutoPlay() {
+    bgMusic.play().then(() => {
+        musicDisc.classList.add('rotating');
+    }).catch(function(error) {
+        console.log("自动播放失败，等待用户交互:", error);
+        // 如果自动播放失败，则监听任意点击事件来播放
+        document.addEventListener('click', function() {
+            if (bgMusic.paused) {
+                bgMusic.play().then(() => {
+                    musicDisc.classList.add('rotating');
+                }).catch(error => console.log("播放失败:", error));
+            }
+        }, { once: true });
+    });
+}
+
+// 添加点击涟漪效果
+function createRipple(event) {
+    // 排除光碟和文字区域的点击
+    if (event.target.closest('#musicDisc') || 
+        event.target.closest('#sentence') || 
+        event.target.closest('#author')) {
+        return;
+    }
+    
+    const ripple = document.createElement('div');
+    ripple.className = 'ripple';
+    
+    // 设置涟漪的位置
+    ripple.style.left = `${event.clientX}px`;
+    ripple.style.top = `${event.clientY}px`;
+    
+    document.body.appendChild(ripple);
+    
+    // 动画结束后移除涟漪元素
+    ripple.addEventListener('animationend', () => {
+        document.body.removeChild(ripple);
+    });
+}
+
+// 在页面加载完成后添加点击事件监听
 document.addEventListener('DOMContentLoaded', () => {
     createRainDrops();
     displayRandomSentence();
-});
-
-// 删除所有点击相关的事件监听器 
+    tryAutoPlay(); // 尝试自动播放音乐
+    
+    // 添加点击事件监听
+    document.addEventListener('click', createRipple);
+}); 
