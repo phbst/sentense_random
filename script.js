@@ -137,12 +137,79 @@ function createRipple(event) {
     });
 }
 
-// 在页面加载完成后添加点击事件监听
+// 添加计时器功能
+let timerInterval = null;
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+let isRunning = false;
+
+function updateTimer() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+    
+    const hoursElement = document.querySelector('.hours');
+    const minutesElement = document.querySelector('.minutes');
+    const secondsElement = document.querySelector('.seconds');
+    
+    hoursElement.textContent = String(hours).padStart(2, '0');
+    minutesElement.textContent = String(minutes).padStart(2, '0');
+    secondsElement.textContent = String(seconds).padStart(2, '0');
+}
+
+function startTimer() {
+    const startBtn = document.querySelector('.timer-btn.start');
+    if (!isRunning) {
+        isRunning = true;
+        startBtn.textContent = 'Pause';
+        startBtn.classList.add('active');
+        timerInterval = setInterval(updateTimer, 1000);
+    } else {
+        isRunning = false;
+        startBtn.textContent = 'Start';
+        startBtn.classList.remove('active');
+        clearInterval(timerInterval);
+    }
+}
+
+function resetTimer() {
+    clearInterval(timerInterval);
+    isRunning = false;
+    seconds = 0;
+    minutes = 0;
+    hours = 0;
+    
+    const startBtn = document.querySelector('.timer-btn.start');
+    startBtn.textContent = 'Start';
+    startBtn.classList.remove('active');
+    
+    const hoursElement = document.querySelector('.hours');
+    const minutesElement = document.querySelector('.minutes');
+    const secondsElement = document.querySelector('.seconds');
+    
+    hoursElement.textContent = '00';
+    minutesElement.textContent = '00';
+    secondsElement.textContent = '00';
+}
+
+// 在页面加载完成后的事件监听中添加计时器控制
 document.addEventListener('DOMContentLoaded', () => {
     createRainDrops();
     displayRandomSentence();
-    tryAutoPlay(); // 尝试自动播放音乐
-    
-    // 添加点击事件监听
+    tryAutoPlay();
     document.addEventListener('click', createRipple);
+    
+    // 添加计时器控制事件监听
+    document.querySelector('.timer-btn.start').addEventListener('click', startTimer);
+    document.querySelector('.timer-btn.reset').addEventListener('click', resetTimer);
+    
+    // 初始化计时器显示
+    resetTimer();
 }); 

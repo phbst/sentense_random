@@ -157,13 +157,100 @@ body {
 
 .site-title {
     position: fixed;
-    top: 20px;
+    top: 30px;
     left: 20px;
     font-size: 24px;
     color: rgba(255, 255, 255, 0.8);
     font-family: 'Arial', sans-serif;
     z-index: 1000;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    user-select: none; /* 防止文字被选中 */
-    pointer-events: none; /* 防止文字影响点击事件 */
+    user-select: none;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title-icon {
+    width: 24px;
+    height: 24px;
+    filter: invert(1); /* 将SVG转为白色 */
+    opacity: 0.8; /* 保持与文字相同的透明度 */
+}
+
+.clock {
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.clock-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.time-display {
+    display: flex;
+    align-items: center;
+}
+
+.time-unit {
+    position: relative;
+    height: 1.2em;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0 8px;
+    border-radius: 4px;
+    min-width: 1.6em;
+    text-align: center;
+}
+
+.time-separator {
+    margin: 0 5px;
+    opacity: 0.8;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.timer-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 16px;
+}
+
+.timer-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.timer-btn.start.active {
+    background: rgba(76, 175, 80, 0.3);
+}
+
+@keyframes flipNumber {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+.time-unit.flip {
+    animation: flipNumber 0.3s ease-in-out;
 }
